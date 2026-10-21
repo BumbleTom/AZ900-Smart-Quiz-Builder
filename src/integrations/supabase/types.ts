@@ -14,7 +14,128 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      questions: {
+        Row: {
+          african_analogy: string
+          correct_index: number
+          explanation: string
+          id: string
+          options: Json
+          question_text: string
+          topic_id: string
+        }
+        Insert: {
+          african_analogy: string
+          correct_index: number
+          explanation: string
+          id?: string
+          options: Json
+          question_text: string
+          topic_id: string
+        }
+        Update: {
+          african_analogy?: string
+          correct_index?: number
+          explanation?: string
+          id?: string
+          options?: Json
+          question_text?: string
+          topic_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "questions_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "topics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quiz_sessions: {
+        Row: {
+          completed_at: string | null
+          id: string
+          score: number
+          total_questions: number
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          id?: string
+          score?: number
+          total_questions?: number
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          id?: string
+          score?: number
+          total_questions?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      topics: {
+        Row: {
+          description: string
+          icon_name: string
+          id: string
+          title: string
+        }
+        Insert: {
+          description?: string
+          icon_name?: string
+          id?: string
+          title: string
+        }
+        Update: {
+          description?: string
+          icon_name?: string
+          id?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      user_answers: {
+        Row: {
+          id: string
+          is_correct: boolean
+          question_id: string
+          selected_index: number
+          session_id: string
+        }
+        Insert: {
+          id?: string
+          is_correct: boolean
+          question_id: string
+          selected_index: number
+          session_id: string
+        }
+        Update: {
+          id?: string
+          is_correct?: boolean
+          question_id?: string
+          selected_index?: number
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_answers_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_answers_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "quiz_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
