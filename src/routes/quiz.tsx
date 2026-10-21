@@ -4,12 +4,12 @@ import { CheckCircle2, XCircle, Lightbulb, Globe2, ArrowRight, Home } from "luci
 import { supabase } from "@/integrations/supabase/client";
 import { fetchQuestions, fetchTopics, getUserId, shuffle, type Question, type Topic } from "@/lib/quiz";
 
-type Search = { topic?: string; topics?: string };
+type Search = { topic?: string | undefined; topics?: string | undefined };
 
 export const Route = createFileRoute("/quiz")({
   validateSearch: (s: Record<string, unknown>): Search => ({
-    topic: typeof s.topic === "string" ? s.topic : undefined,
-    topics: typeof s.topics === "string" ? s.topics : undefined,
+    topic: typeof s["topic"] === "string" ? s["topic"] : undefined,
+    topics: typeof s["topics"] === "string" ? s["topics"] : undefined,
   }),
   head: () => ({
     meta: [
@@ -60,7 +60,7 @@ function QuizPage() {
   if (!questions || !sessionId) return <Center>Loading questions…</Center>;
   if (questions.length === 0) return <Center>No questions found for this topic.</Center>;
 
-  const q = questions[idx];
+  const q = questions[idx]!;
   const answered = selected !== null;
   const progress = ((idx + (answered ? 1 : 0)) / questions.length) * 100;
 
