@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { CheckCircle2, XCircle, Lightbulb, Globe2, ArrowRight, Home } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { fetchQuestions, fetchTopics, getUserId, shuffle, type Question, type Topic } from "@/lib/quiz";
@@ -145,6 +145,6 @@ function QuizPage() {
   );
 }
 
-function Center({ children }: { children: React.ReactNode }) {
+function Center({ children }: { children: ReactNode }) {
   return <div className="flex min-h-[60vh] items-center justify-center text-muted-foreground">{children}</div>;
 }
