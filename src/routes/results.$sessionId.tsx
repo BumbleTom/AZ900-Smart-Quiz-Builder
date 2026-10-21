@@ -33,9 +33,9 @@ function Results() {
       for (const row of a.data) {
         const t = row.questions?.topics;
         if (!t) continue;
-        byTopic[t.id] ??= { id: t.id, title: t.title, correct: 0, total: 0 };
-        byTopic[t.id].total++;
-        if (row.is_correct) byTopic[t.id].correct++;
+        const e = (byTopic[t.id] ??= { id: t.id, title: t.title, correct: 0, total: 0 });
+        e.total++;
+        if (row.is_correct) e.correct++;
       }
       return { session: s.data, topics: Object.values(byTopic) };
     },
